@@ -13,5 +13,12 @@ namespace Blog.Controllers
             // return RedirectToAction("List", "Article");
             return View();
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Desciption";
+
+            return View();
+        }
     }
 }

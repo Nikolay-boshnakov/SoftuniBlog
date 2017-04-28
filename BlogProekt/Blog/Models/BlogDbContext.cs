@@ -10,6 +10,8 @@ namespace Blog.Models
         {
         }
 
+        public virtual IDbSet<Drawing> Drawings { get; set; }
+
         public virtual IDbSet<Article> Articles { get; set; }
 
         public static BlogDbContext Create()

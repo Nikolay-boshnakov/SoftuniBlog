@@ -1,0 +1,33 @@
+﻿@model List<Blog.Models.Drawing>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var drawing in Model)
+        {
+            <div class="col-sm-6">
+                <article>
+                    <header>
+                        <h2>
+                            @*   @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null) *@
+                            <a href="/Article/Details/@drawing.Id"><span style="color:sandybrown">@drawing.Title</span></a>
+                        </h2>
+                    </header>
+                    <div>
+                        <img class = "img-responsive" src="@drawing.ImageUrl" alt="@drawing.Title">
+                    </div>                        
+                    <footer class="pull-right">
+                        <small class="author">
+                            author: @drawing.Artist.FullName
+                        </small>
+                    </footer>
+                </article>
+            </div>
+        }
+    </div>
+</div>
+<hr />
+

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Blog.Migrations;
+using Blog.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +15,7 @@ namespace Blog
     {
         protected void Application_Start()
         {
+            
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

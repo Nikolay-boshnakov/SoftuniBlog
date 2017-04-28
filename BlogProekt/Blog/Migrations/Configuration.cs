@@ -14,6 +14,7 @@ namespace Blog.Migrations
 
         protected override void Seed(Blog.Models.BlogDbContext context)
         {
+           
         }
     }
 }

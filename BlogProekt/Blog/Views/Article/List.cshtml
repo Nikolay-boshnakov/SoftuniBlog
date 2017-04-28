@@ -12,12 +12,15 @@
                 <article>
                     <header>
                         <h2>
-                            @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
+                          @*  @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null)  *@
+                            <a href="/Article/Details/@article.Id"><span style="color:sandybrown">@article.Title</span></a>
                         </h2>
                     </header>
                     <p>
                         @article.Content
                     </p>
+
+                    @Html.ActionLink("Like", "Index", "Article", null, new { @class = "btn btn-primary" })
                     <footer class="pull-right">
                         <small class="author">
                             --author @article.Author.FullName
