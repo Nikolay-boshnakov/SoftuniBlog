@@ -200,6 +200,7 @@
     <Compile Include="Controllers\DrawingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +213,8 @@
     <Compile Include="Models\Drawing.cs" />
     <Compile Include="Models\DrawingViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Photo.cs" />
+    <Compile Include="Models\PhotoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\ImageUrlAttribute.cs" />
@@ -282,6 +285,14 @@
     <Content Include="Views\Drawing\Upload.cshtml" />
     <Content Include="Views\Drawing\Details.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Drawing\Delete.cshtml" />
+    <Content Include="Views\Drawing\Top.cshtml" />
+    <Content Include="Views\Photo\Show.cshtml" />
+    <Content Include="Views\Photo\Upload.cshtml" />
+    <Content Include="Views\Photo\Top.cshtml" />
+    <Content Include="Views\Photo\Details.cshtml" />
+    <Content Include="Views\Photo\Delete.cshtml" />
+    <Content Include="Views\Article\Top.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

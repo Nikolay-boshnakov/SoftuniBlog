@@ -18,6 +18,8 @@ namespace Blog.Models
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
 
+        public int Likes { get; set; }
+
         public virtual ApplicationUser Author { get; set; }
 
         public bool IsAuthor(string name)

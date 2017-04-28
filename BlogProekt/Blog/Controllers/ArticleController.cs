@@ -111,15 +111,38 @@ namespace Blog.Controllers
 
         //
         // GET: Article/List
-        public ActionResult List()
+        public ActionResult List(int page = 1)
         {
             using (var database = new BlogDbContext())
             {
-                var articles = database.Articles
+                var pageSize = 2;
+                var article = database.Articles
+                    .OrderByDescending(x => x.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .Include(a => a.Author)
                     .ToList();
 
-                return View(articles);
+                ViewBag.CurrentPage = page;
+
+                return View(article);
+            }
+
+        }
+
+        [Authorize]
+        public ActionResult Like(int? id)
+        {
+            using (var database = new BlogDbContext())
+            {
+                var article = database.Articles
+                    .Where(a => a.Id == id)
+                    .First();
+
+                article.Likes++;
+                database.SaveChanges();
+
+                return RedirectToAction("List");
             }
         }
 
@@ -182,6 +205,25 @@ namespace Blog.Controllers
 
             return View(article);
         }
+
+        public ActionResult Top()
+        {
+            using (var database = new BlogDbContext())
+            {
+                var articles = database.Articles
+                    .OrderByDescending(x => x.Likes)
+                    .Take(3)
+                    .ToList();
+
+                if (articles == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(articles);
+            }
+        }
+
         //
         // POST: Article/Delete
         [Authorize]

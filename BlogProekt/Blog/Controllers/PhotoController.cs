@@ -6,9 +6,8 @@
     using System.Net;
     using System.Web.Mvc;
 
-    public class DrawingController : Controller
+    public class PhotoController : Controller
     {
-
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -19,47 +18,42 @@
             using (var database = new BlogDbContext())
             {
 
-                var drawing = database.Drawings
+                var photo = database.Photos
                     .Where(a => a.Id == id)
                     .Include(a => a.Artist)
                     .FirstOrDefault();
 
-                if (!EditAuthorized(drawing))
+                if (!EditAuthorized(photo))
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
                 }
 
-                if (drawing == null)
+                if (photo == null)
                 {
                     return HttpNotFound();
                 }
 
-                return View(drawing);
+                return View(photo);
             }
         }
+       
 
         public ActionResult Index()
         {
             return RedirectToAction("Show");
         }
 
-        public ActionResult Show(int page = 1)
-        {            
+        public ActionResult Show()
+        {
             using (var database = new BlogDbContext())
             {
-                var pageSize = 2;
-                var drawing = database.Drawings
-                    .OrderByDescending(x=>x.Id)
-                    .Skip((page -1) * pageSize)
-                    .Take(pageSize)
+                var photo = database.Photos
                     .Include(a => a.Artist)
                     .ToList();
 
-                ViewBag.CurrentPage = page;
 
-                return View(drawing);
+                return View(photo);
             }
-            
         }
 
         public ActionResult Details(int? id)
@@ -71,17 +65,17 @@
 
             using (var database = new BlogDbContext())
             {
-                var drawing = database.Drawings
+                var photo = database.Photos
                     .Where(a => a.Id == id)
                     .Include(a => a.Artist)
                     .First();
 
-                if (drawing == null)
+                if (photo == null)
                 {
                     return HttpNotFound();
                 }
 
-                return View(drawing);
+                return View(photo);
             }
         }
 
@@ -94,7 +88,7 @@
 
         [Authorize]
         [HttpPost]
-        public ActionResult Upload(Drawing drawing)
+        public ActionResult Upload(Photo photo)
         {
             if (ModelState.IsValid)
             {
@@ -105,46 +99,46 @@
                         .First()
                         .Id;
 
-                    drawing.ArtistId = artistId;
+                    photo.ArtistId = artistId;
 
-                    database.Drawings.Add(drawing);
+                    database.Photos.Add(photo);
                     database.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
             }
 
-            return View(drawing);
+            return View(photo);
         }
 
         public ActionResult Top()
         {
             using (var database = new BlogDbContext())
             {
-                var drawings = database.Drawings
-                    .OrderByDescending(x=>x.Likes)
+                var photos = database.Photos
+                    .OrderByDescending(x => x.Likes)
                     .Take(3)
                     .ToList();
 
-                if (drawings == null)
+                if (photos == null)
                 {
                     return HttpNotFound();
                 }
 
-                return View(drawings);
+                return View(photos);
             }
         }
 
         [Authorize]
-        public ActionResult Like(int id)
+        public ActionResult Like(int? id)
         {
             using (var database = new BlogDbContext())
             {
-                var drawing = database.Drawings
+                var photo = database.Photos
                     .Where(a => a.Id == id)
-                    .First(); 
+                    .First();
 
-                drawing.Likes++;
+                photo.Likes++;
                 database.SaveChanges();
 
                 return RedirectToAction("Show");
@@ -158,26 +152,26 @@
         {
             using (var database = new BlogDbContext())
             {
-                var drawing = database.Drawings
+                var photo = database.Photos
                     .Where(a => a.Id == id)
                     .Include(a => a.Artist)
                     .FirstOrDefault();
 
-                if (drawing == null)
+                if (photo == null)
                 {
                     return HttpNotFound();
                 }
-                database.Drawings.Remove(drawing);
+                database.Photos.Remove(photo);
                 database.SaveChanges();
 
                 return RedirectToAction("Show");
             }
         }
 
-        private bool EditAuthorized(Drawing drawing)
+        private bool EditAuthorized(Photo photo)
         {
             bool isAdmin = this.User.IsInRole("Admin");
-            bool isAuthor = drawing.IsArtist(this.User.Identity.Name);
+            bool isAuthor = photo.IsArtist(this.User.Identity.Name);
 
             return isAdmin || isAuthor;
         }

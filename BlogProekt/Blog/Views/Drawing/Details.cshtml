@@ -1,7 +1,32 @@
-﻿
+﻿@model Blog.Models.Drawing
+
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.Title
+            </h2>
+        </header>
+        <div>
+            <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title">
+        </div>
+        
+        <small class="author">
+            author: @Model.Artist.FullName
+        </small>
+        <footer class="pull-right">
+            @if (User.IsInRole("Admin") || Model.IsArtist(User.Identity.Name))
+            {
+                @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+            }
+
+            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+        </footer>
+    </article>
+</div>
+<hr />
 

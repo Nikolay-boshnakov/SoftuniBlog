@@ -17,6 +17,8 @@ namespace Blog.Models
         [Required]
         public string Content { get; set; }
 
+        public int Likes { get; set; }
+
         public string AuthorId { get; set; }
     }
     }

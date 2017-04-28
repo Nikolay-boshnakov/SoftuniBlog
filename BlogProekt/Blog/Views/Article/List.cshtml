@@ -5,6 +5,14 @@
 }
 
 <div class="container">
+    @if (!Model.Any() || Model.Count < 2)
+    {
+        <h2 class="text-center">Last page Reached!</h2>
+    }
+    else
+    {
+        <h2 class="text-center">All Stories/Poems - Page:@ViewBag.CurrentPage</h2>
+    }
     <div class="row">
         @foreach (var article in Model)
         {
@@ -12,7 +20,7 @@
                 <article>
                     <header>
                         <h2>
-                          @*  @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null)  *@
+                            @*  @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null)  *@
                             <a href="/Article/Details/@article.Id"><span style="color:sandybrown">@article.Title</span></a>
                         </h2>
                     </header>
@@ -20,7 +28,10 @@
                         @article.Content
                     </p>
 
-                    @Html.ActionLink("Like", "Index", "Article", null, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Like", "Like", "Article", new { @id = article.Id }, new { @class = "btn btn-primary" })
+                    <p>
+                        Likes: @article.Likes
+                    </p>
                     <footer class="pull-right">
                         <small class="author">
                             --author @article.Author.FullName
@@ -30,5 +41,11 @@
             </div>
         }
     </div>
+</div>
+<p class="text-center">
+    <a href="/Article/List?page=@(ViewBag.CurrentPage-1)" class="btn btn-success @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Prev <<</a>
+    <a href="/Article/List?page=@(ViewBag.CurrentPage+1)" class="btn btn-success @(!Model.Any() || Model.Count<2 ? "disabled" : string.Empty)">Next >></a>
+</p>
+</div>
 </div>
 <hr />
