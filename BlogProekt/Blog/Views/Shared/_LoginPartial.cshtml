@@ -8,13 +8,24 @@
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                My art
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/Article/List?user=@User.Identity.GetUserName()">Stories/Poems</a></li>
+                <li><a href="/Drawing/Show?user=@User.Identity.GetUserName()">Drawings</a></li>
+                <li><a href="/Photo/Show?user=@User.Identity.GetUserName()">Photos</a></li>           
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 Upload
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
                 <li>@Html.ActionLink("Poems", "Create", "Article")</li>
                 <li>@Html.ActionLink("Pictures", "Upload", "Drawing")</li>
-                <li>@Html.ActionLink("Photos", "Upload", "Photos")</li>
+                <li>@Html.ActionLink("Photos", "Upload", "Photo")</li>
             </ul>
         </li>
         <li>

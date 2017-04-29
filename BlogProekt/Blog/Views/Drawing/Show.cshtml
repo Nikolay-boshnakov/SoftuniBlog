@@ -10,39 +10,44 @@
         }
         else
         {
-            <h2 class="text-center">All Drawings - @ViewBag.CurrentPage</h2>
+            <h2 class="text-center">All Drawings - Page: @ViewBag.CurrentPage</h2>
         }
    
-    <div class="row">
-        @foreach (var drawing in Model)
+        <div class="row">
+            @foreach (var drawing in Model)
             {
-            <div class="col-sm-6">
-                <article>
-                    <header>
-                        <h2>
-                            @*   @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null) *@
-                            <a href="/Article/Details/@drawing.Id"><span style="color:sandybrown">@drawing.Title</span></a>
-                        </h2>
-                    </header>
-                    <div>
-                        <img class="img-responsive img-rounded" src="@drawing.ImageUrl" alt="@drawing.Title" style="width: 69%; height: 69%">
-                    </div>
-                    @Html.ActionLink("Like", "Like", "Drawing", new { @id = drawing.Id }, new { @class = "btn btn-primary" })
-                    <p class="lead">
-                        Likes: @drawing.Likes
-                    </p>
-                    <footer class="pull-right">
-                        <small class="author">
-                            author: @drawing.Artist.UserName
-                        </small>
-                    </footer>
-                </article>
-            </div>
+                <div class="col-sm-6">
+                    <article>
+                        <header>
+                            <h2>
+                                @*   @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null) *@
+                                <a href="/Article/Details/@drawing.Id"><span style="color:sandybrown">@drawing.Title</span></a>
+                            </h2>
+                        </header>
+                        <div>
+                            <img class="img-responsive img-rounded" src="@drawing.ImageUrl" alt="@drawing.Title" style="width: 69%; height: 69%">
+                        </div>
+                        @Html.ActionLink("Like", "Like", "Drawing", new { @id = drawing.Id }, new { @class = "btn btn-primary" })
+                        <p class="lead">
+                            Likes: @drawing.Likes
+                        </p>
+                        <a style="color:brown" href="/Drawing/Show/?user=@drawing.Artist.FullName">@drawing.Artist.FullName</a>
+                        <footer class="pull-right">
+                            <small class="author">
+                                author: @drawing.Artist.FullName
+                            </small>
+                        </footer>
+                    </article>
+                </div>
+            }
+        </div>
+        @{
+            var currUserQuery = Request.QueryString["user"];
         }
-    </div>
+</div>
         <p class="text-center">
-            <a href="/Drawing/Show?page=@(ViewBag.CurrentPage-1)" class="btn btn-success @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Prev <<</a>
-            <a href="/Drawing/Show?page=@(ViewBag.CurrentPage+1)" class="btn btn-success @(!Model.Any() || Model.Count<2 ? "disabled" : string.Empty)">Next >></a>
+            <a href="/Drawing/Show?page=@(ViewBag.CurrentPage-1)@(currUserQuery!=null ?"&user=" + currUserQuery:string.Empty)" class="btn btn-success @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Prev <<</a>
+            <a href="/Drawing/Show?page=@(ViewBag.CurrentPage+1)@(currUserQuery!=null ?"&user=" + currUserQuery:string.Empty)" class="btn btn-success @(!Model.Any() || Model.Count<2 ? "disabled" : string.Empty)">Next >></a>
         </p>
 </div>
 <hr />

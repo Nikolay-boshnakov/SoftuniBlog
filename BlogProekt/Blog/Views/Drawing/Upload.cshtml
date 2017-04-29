@@ -2,14 +2,9 @@
 @{
     ViewBag.Title = "Upload";
 }
-<style type="text/css">
-    .bgimg {
-        background-image: url('../images/divbg.png');
-    }
-</style>
 
 <div class="container">
-    <div class="well bgimg">
+    <div class="well">
         <h2>Upload Drawing</h2>
         @using (Html.BeginForm("Upload", "Drawing", FormMethod.Post, new { @class = "form-horizontal" }))
         {

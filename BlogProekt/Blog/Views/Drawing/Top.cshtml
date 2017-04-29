@@ -13,7 +13,7 @@
                     <header>
                         <h2>
                             @*   @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null) *@
-                            <a href="/Article/Details/@drawing.Id"><span style="color:sandybrown">@drawing.Title</span></a>
+                            <a href="/Drawing/Details/@drawing.Id"><span style="color:sandybrown">@drawing.Title</span></a>
                         </h2>
                     </header>
                     <div>
@@ -22,11 +22,11 @@
                     <p class="lead">
                         Likes: @drawing.Likes
                     </p>
-                @*    <footer class="pull-right">
+                   <footer class="pull-right">
        <small class="author">
             author: @drawing.Artist.FullName
         </small>
-    </footer> *@
+    </footer> 
                 </article>
             </div>
         }

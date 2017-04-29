@@ -21,10 +21,10 @@
         <footer class="pull-right">
             @if (User.IsInRole("Admin") || Model.IsArtist(User.Identity.Name))
             {
-                @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+                @Html.ActionLink("Delete", "Delete", "Drawing", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
             }
 
-            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+            @Html.ActionLink("Back", "Index", "Drawing", null, new { @class = "btn btn-default btn-xs" })
         </footer>
     </article>
 </div>

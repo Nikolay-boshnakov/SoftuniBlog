@@ -111,12 +111,21 @@ namespace Blog.Controllers
 
         //
         // GET: Article/List
-        public ActionResult List(int page = 1)
+        public ActionResult List(int page = 1, string user = null)
         {
             using (var database = new BlogDbContext())
             {
+                
                 var pageSize = 2;
-                var article = database.Articles
+
+                var myArticles = database.Articles.AsQueryable();
+
+                if (user !=null)
+                {
+                    myArticles = myArticles.Where(a => a.Author.UserName == user);
+                }
+
+                var article = myArticles
                     .OrderByDescending(x => x.Id)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
@@ -212,7 +221,8 @@ namespace Blog.Controllers
             {
                 var articles = database.Articles
                     .OrderByDescending(x => x.Likes)
-                    .Take(3)
+                    .Take(4)
+                    .Include(a => a.Author)
                     .ToList();
 
                 if (articles == null)

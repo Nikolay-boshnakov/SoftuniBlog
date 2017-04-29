@@ -1,7 +1,36 @@
-﻿
+﻿@model List<Blog.Models.Photo>
+
 @{
-    ViewBag.Title = "Best";
+    ViewBag.Title = "List";
 }
 
-<h2>Best</h2>
+<div class="container">
+    <div class="row">
+        @foreach (var photo in Model)
+        {
+            <div class="col-sm-4">
+                <article>
+                    <header>
+                        <h2>
+                            @*   @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null) *@
+                            <a href="/Photo/Details/@photo.Id"><span style="color:sandybrown">@photo.Title</span></a>
+                        </h2>
+                    </header>
+                    <div>
+                        <img class="img-responsive" src="@photo.ImageUrl" alt="@photo.Title">
+                    </div>
+                    <p class="lead">
+                        Likes: @photo.Likes
+                    </p>
+                    <footer class="pull-right">
+                        <small class="author">
+                            author: @photo.Artist.FullName
+                        </small>
+                    </footer>
+                </article>
+            </div>
+        }
+    </div>
+</div>
+<hr />
 

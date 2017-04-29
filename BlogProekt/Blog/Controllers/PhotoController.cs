@@ -43,17 +43,31 @@
             return RedirectToAction("Show");
         }
 
-        public ActionResult Show()
+        public ActionResult Show(int page = 1, string user = null)
         {
             using (var database = new BlogDbContext())
             {
-                var photo = database.Photos
+                var pageSize = 2;
+
+                var myPhotos = database.Photos.AsQueryable();
+
+                if (user != null)
+                {
+                    myPhotos = myPhotos.Where(a => a.Artist.UserName == user);
+                }
+
+                var photo = myPhotos
+                    .OrderByDescending(x => x.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .Include(a => a.Artist)
                     .ToList();
 
+                ViewBag.CurrentPage = page;
 
                 return View(photo);
             }
+
         }
 
         public ActionResult Details(int? id)
@@ -117,6 +131,7 @@
             {
                 var photos = database.Photos
                     .OrderByDescending(x => x.Likes)
+                    .Include(a=>a.Artist)
                     .Take(3)
                     .ToList();
 

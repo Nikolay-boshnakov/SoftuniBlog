@@ -43,24 +43,7 @@
             return RedirectToAction("Show");
         }
 
-        public ActionResult Show(int page = 1)
-        {            
-            using (var database = new BlogDbContext())
-            {
-                var pageSize = 2;
-                var drawing = database.Drawings
-                    .OrderByDescending(x=>x.Id)
-                    .Skip((page -1) * pageSize)
-                    .Take(pageSize)
-                    .Include(a => a.Artist)
-                    .ToList();
-
-                ViewBag.CurrentPage = page;
-
-                return View(drawing);
-            }
-            
-        }
+        
 
         public ActionResult Details(int? id)
         {
@@ -117,6 +100,33 @@
             return View(drawing);
         }
 
+        public ActionResult Show(int page = 1, string user = null)
+        {
+            using (var database = new BlogDbContext())
+            {
+                var pageSize = 2;
+
+                var myDrawings = database.Drawings.AsQueryable();
+
+                if (user != null)
+                {
+                    myDrawings = myDrawings.Where(a => a.Artist.UserName == user);
+                }
+
+                var drawing = myDrawings
+                    .OrderByDescending(x => x.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .Include(a => a.Artist)
+                    .ToList();
+
+                ViewBag.CurrentPage = page;
+
+                return View(drawing);
+            }
+
+        }
+
         public ActionResult Top()
         {
             using (var database = new BlogDbContext())
@@ -124,6 +134,7 @@
                 var drawings = database.Drawings
                     .OrderByDescending(x=>x.Likes)
                     .Take(3)
+                    .Include(a => a.Artist)
                     .ToList();
 
                 if (drawings == null)

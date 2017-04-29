@@ -1,7 +1,54 @@
-﻿
+﻿@model List<Blog.Models.Photo>
+
 @{
-    ViewBag.Title = "ShowAll";
+    ViewBag.Title = "Show";
 }
 
-<h2>ShowAll</h2>
+<div class="container">
+    @if (!Model.Any() || Model.Count < 2)
+    {
+        <h2 class="text-center">Last page Reached!</h2>
+    }
+    else
+    {
+        <h2 class="text-center">All Photos - @ViewBag.CurrentPage</h2>
+    }
+
+    <div class="row">
+        @foreach (var photo in Model)
+            {
+            <div class="col-sm-6">
+                <article>
+                    <header>
+                        <h2>
+                            @*   @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null) *@
+                            <a href="/Photo/Details/@photo.Id"><span style="color:sandybrown">@photo.Title</span></a>
+                        </h2>
+                    </header>
+                    <div>
+                        <img class="img-responsive img-rounded" src="@photo.ImageUrl" alt="@photo.Title" style="width: 69%; height: 69%">
+                    </div>
+                    @Html.ActionLink("Like", "Like", "Photo", new { @id = photo.Id }, new { @class = "btn btn-primary" })
+                    <p class="lead">
+                        Likes: @photo.Likes
+                    </p>
+                    <a style="color:brown" href="/Photo/Show/?user=@photo.Artist.FullName">See all by @photo.Artist.FullName</a>
+                    <footer class="pull-right">
+                        <small class="author">
+                            author: @photo.Artist.FullName
+                        </small>
+                    </footer>
+                </article>
+            </div>
+        }
+    </div>
+    @{
+        var currUserQuery = Request.QueryString["user"];
+    }
+    <p class="text-center">
+        <a href="/Drawing/Show?page=@(ViewBag.CurrentPage-1)@(currUserQuery!=null ?"&user=" + currUserQuery:string.Empty)" class="btn btn-success @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Prev <<</a>
+        <a href="/Drawing/Show?page=@(ViewBag.CurrentPage+1)@(currUserQuery!=null ?"&user=" + currUserQuery:string.Empty)" class="btn btn-success @(!Model.Any() || Model.Count<2 ? "disabled" : string.Empty)">Next >></a>
+    </p>
+</div>
+<hr />
 

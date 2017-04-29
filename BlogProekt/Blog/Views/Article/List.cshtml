@@ -32,6 +32,7 @@
                     <p>
                         Likes: @article.Likes
                     </p>
+                    <a style="color:brown" href="/Article/List/?user=@article.Author.FullName">@article.Author.FullName</a>
                     <footer class="pull-right">
                         <small class="author">
                             --author @article.Author.FullName
@@ -42,10 +43,11 @@
         }
     </div>
 </div>
+@{ 
+    var currUserQuery = Request.QueryString["user"];
+}
 <p class="text-center">
-    <a href="/Article/List?page=@(ViewBag.CurrentPage-1)" class="btn btn-success @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Prev <<</a>
-    <a href="/Article/List?page=@(ViewBag.CurrentPage+1)" class="btn btn-success @(!Model.Any() || Model.Count<2 ? "disabled" : string.Empty)">Next >></a>
+    <a href="/Article/List?page=@(ViewBag.CurrentPage-1)@(currUserQuery!=null ?"&user=" + currUserQuery:string.Empty)" class="btn btn-success @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Prev <<</a>
+    <a href="/Article/List?page=@(ViewBag.CurrentPage+1)@(currUserQuery!=null ?"&user=" + currUserQuery:string.Empty)" class="btn btn-success @(!Model.Any() || Model.Count<2 ? "disabled" : string.Empty)">Next >></a>
 </p>
-</div>
-</div>
 <hr />
