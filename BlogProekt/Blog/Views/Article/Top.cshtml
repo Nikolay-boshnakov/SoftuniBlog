@@ -9,31 +9,35 @@
     <h2>Top</h2>
     <div class="row">
         @foreach (var article in Model)
-        {
-            <div class="col-sm-6">
-                <article>
-                    <header>
-                        <h2>
-                            @*  @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null)  *@
-                            <a href="/Article/Details/@article.Id"><span style="color:sandybrown">@article.Title</span></a>
-                        </h2>
-                    </header>
-                    <p>
-                        @article.Content
-                    </p>
-
-                    <p>
-                        Likes: @article.Likes
-                    </p>
-                    <footer class="pull-right">
-                        <small class="author">
-                            --author @article.Author.FullName
-                        </small>
-                    </footer>
-                </article>
-            </div>
+        {           
+                <div class="col-sm-6">
+                    <article>
+                        <header>                          
+                                <h2>
+                                    @*  @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id },  null)  *@
+                                    <a href="/Article/Details/@article.Id"><span style="color:sandybrown">@article.Title</span></a>
+                                </h2>                        
+                        </header>
+                        <div class="well">
+                            <p>
+                                @article.Content
+                            </p>
+                        </div>
+                            <p>
+                                Likes: @article.Likes
+                            </p>
+                            <footer class="pull-right">
+                                <small class="author">
+                                    --author @article.Author.FullName
+                                </small>
+                            </footer>
+                    </article>
+                </div>
+         
         }
-    </div>
-</div>
-<hr />
+                 
+                </div>
+            </div>
+           
+            <hr />
 

@@ -24,21 +24,22 @@
                             <a href="/Article/Details/@article.Id"><span style="color:sandybrown">@article.Title</span></a>
                         </h2>
                     </header>
-                    <p>
-                        @article.Content
-                    </p>
-
-                    @Html.ActionLink("Like", "Like", "Article", new { @id = article.Id }, new { @class = "btn btn-primary" })
-                    <p>
-                        Likes: @article.Likes
-                    </p>
-                    <a style="color:brown" href="/Article/List/?user=@article.Author.FullName">@article.Author.FullName</a>
-                    <footer class="pull-right">
-                        <small class="author">
-                            --author @article.Author.FullName
-                        </small>
-                    </footer>
-                </article>
+                    <div class="well">
+                        <p>
+                            @article.Content
+                        </p>
+                        </div>
+                        @Html.ActionLink("Like", "Like", "Article", new { @id = article.Id }, new { @class = "btn btn-primary" })
+                        <p>
+                            Likes: @article.Likes
+                        </p>
+                        <a style="color:brown" href="/Article/List/?user=@article.Author.FullName">@article.Author.FullName</a>
+                        <footer class="pull-right">
+                            <small class="author">
+                                --author @article.Author.FullName
+                            </small>
+                        </footer>
+</article>
             </div>
         }
     </div>
